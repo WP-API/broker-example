@@ -15,7 +15,7 @@
 <dl>
 	<?php if ( isset( $args['credentials']['api_root'] ) ): ?>
 		<dt>API Index URL</dt>
-		<dd><?php echo htmlspecialchars( $args['credentials']['api_root'] ) ?></dd>
+		<dd><code><?php echo htmlspecialchars( $args['credentials']['api_root'] ) ?></code></dd>
 	<?php endif ?>
 
 	<dt>Client Key</dt>
