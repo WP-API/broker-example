@@ -29,7 +29,6 @@ switch ( $step ) {
 	case 'connect':
 		foreach ( [ 'broker_url', 'client_key', 'client_secret', 'site_uri' ] as $key ) {
 			if ( empty( $_POST[ $key ] ) ) {
-				var_dump( $key );
 				return output_page( load_template( 'site-form' ) );
 			}
 		}
