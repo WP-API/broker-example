@@ -62,28 +62,12 @@ class WPBroker extends Server {
 		$credentials = array();
 
 		try {
-			$stream = $response->getBody();
-			$line = '';
-			while (!$stream->eof()) {
-				// Read a line from the stream
-				$char = $stream->read( 1 );
-				if ( $char !== "\n" ) {
-					$line .= $char;
-					continue;
-				}
-
-				// JSON decode, now that we have the full data.
-				$data = json_decode( $line, true );
-				$line = '';
-
-				if ( empty( $data ) ) {
-					continue;
-				}
-
-				if ( isset( $data['client_token'] ) && isset( $data['client_secret'] ) ) {
-					$credentials = $data;
-					break;
-				}
+			$body = $response->getBody()->getContents();
+			$data = json_decode( $body, true );
+			if ( isset( $data['client_token'] ) && isset( $data['client_secret'] ) ) {
+				$credentials = $data;
+			} else {
+				throw new Exception( sprintf( 'Error returned from broker: %s', $body ) );
 			}
 
 		} catch (BadResponseException $e) {
